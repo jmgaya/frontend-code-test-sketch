@@ -14,42 +14,55 @@ const Spinner = styled.svg`
   }
 `;
 
-export default () => (
-  <Spinner
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    width="42"
-    height="42"
-  >
-    {" "}
-    <defs>
+export default ({ delayDurationInMs = 800 }) => {
+  const [hidden, setHidden] = React.useState(true);
+
+  React.useEffect(() => {
+    const handler = setTimeout(() => {
+      setHidden(false);
+    }, parseInt(delayDurationInMs));
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [delayDurationInMs]);
+
+  return hidden ? null : (
+    <Spinner
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      width="42"
+      height="42"
+    >
       {" "}
-      <radialGradient
-        cx="97.483%"
-        cy="28.573%"
-        fx="97.483%"
-        fy="28.573%"
-        r="168.336%"
-        gradientTransform="translate(0.974834,0.285734),rotate(-3.337588),scale(1.000000,0.404040),translate(-0.974834,-0.285734)"
-        id="a"
-      >
+      <defs>
         {" "}
-        <stop stopColor="#f06e00" offset="0%" />{" "}
-        <stop stopColor="#f06e00" stopOpacity=".816" offset="18.426%" />{" "}
-        <stop stopColor="#f06e00" stopOpacity="0" offset="100%" />{" "}
-      </radialGradient>{" "}
-    </defs>{" "}
-    <g fill="none" fillRule="evenodd">
-      {" "}
-      <rect fillOpacity="0" fill="#FF0000" width="24" height="24" />{" "}
-      <path
-        d="M12,23 C5.92486775,23 1,18.0751322 1,12 C1,5.92486775 5.92486775,1 12,1 C18.0751322,1 23,5.92486775 23,12 C23,18.0751322 18.0751322,23 12,23 Z"
-        stroke="url(#a)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeDasharray="48.33 69.117"
-      />{" "}
-    </g>
-  </Spinner>
-);
+        <radialGradient
+          cx="97.483%"
+          cy="28.573%"
+          fx="97.483%"
+          fy="28.573%"
+          r="168.336%"
+          gradientTransform="translate(0.974834,0.285734),rotate(-3.337588),scale(1.000000,0.404040),translate(-0.974834,-0.285734)"
+          id="a"
+        >
+          {" "}
+          <stop stopColor="#f06e00" offset="0%" />{" "}
+          <stop stopColor="#f06e00" stopOpacity=".816" offset="18.426%" />{" "}
+          <stop stopColor="#f06e00" stopOpacity="0" offset="100%" />{" "}
+        </radialGradient>{" "}
+      </defs>{" "}
+      <g fill="none" fillRule="evenodd">
+        {" "}
+        <rect fillOpacity="0" fill="#FF0000" width="24" height="24" />{" "}
+        <path
+          d="M12,23 C5.92486775,23 1,18.0751322 1,12 C1,5.92486775 5.92486775,1 12,1 C18.0751322,1 23,5.92486775 23,12 C23,18.0751322 18.0751322,23 12,23 Z"
+          stroke="url(#a)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="48.33 69.117"
+        />{" "}
+      </g>
+    </Spinner>
+  );
+};

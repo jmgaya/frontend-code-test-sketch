@@ -13,6 +13,10 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 ## Decisions
 
 * [CRA](http://create-react-app.dev/) for simplicity purposes when setting up an entire new React project
+* Using [React Router](https://reacttraining.com/react-router/web/) for routing simplicity.
+* **Document routes** have `/document/document-id` shape
+* **Artboard routes** have `/document/document-id/artboard/artboard-id` shape
+* Implemented **Load different documents depending on the URL** bonus point through `/document/document-id` routes, defaulting to `document/Y8wDM` when accessing `/` route
 * Using [styled components](https://styled-components.com/) because Sketch is internally using **styled components**. On my day by day basis I use [JSS](https://cssinjs.org/) with its main advantages (and disavantages) over **styled components**
 * Removed all the logic referring [Service Workers](https://developers.google.com/web/fundamentals/primers/service-workers) because it's not a requirement.
 * Removed the [Webapp manifest](https://developers.google.com/web/fundamentals/web-app-manifest) because it's not a requirement.
@@ -21,6 +25,8 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Favoured *arrow functions* over explicit *function declarations* mainly because of issues with scopes and simplicity
 * Using [yarn](https://yarnpkg.com/) as the package manager because it comes with [CRA](http://create-react-app.dev/) and I'm using it on my day by day basis.
 * Using **fetch** for querying the API for simplicity.
-* Extracted **constants** like *colors* and *routes* for "changing once, working everywhere"
-* Extracted **common** components as `Header`, `Spinner` and `Logo` for future usages.
+* Extracted **constants** like *colors*,  *routes* or *fonts* for "changing once, working everywhere" pattern.
+* Extracted **common** components as `Header`, `Spinner`, `Button` or `Logo` given its multiple usages.
 * Using **Roboto** as main font, but with **swap**, so the browser will initially show a fallback font, then once the Google Font has downloaded it will swap the fonts.
+* Delaying **loading spinner** 1s manually trying to mimic React.lazy loading when fetching data (in this case, the required document). This practice intends to avoid a "spinner party" when our UI requires several parts to be fetched/rendered independently one from another.
+* Display error case when the document could not be fetched.
