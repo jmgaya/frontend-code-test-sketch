@@ -5,9 +5,7 @@ import { BLACK } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
 import { FADE_IN_ANIMATION } from "../constants/styles";
 import Header from "./common/header";
-import Logo from "./common/logo";
 import Spinner from "./common/spinner";
-import VerticalDivider from "./common/vertical-divider";
 import { queryDocument } from "../utils/query";
 
 const HeaderText = styled.h1`
@@ -64,8 +62,6 @@ const Artboard = () => {
     return (
       <>
         <Header>
-          <Logo />
-          <VerticalDivider />
           <HeaderText>{artboard.name}</HeaderText>
         </Header>
         <View>

@@ -119,8 +119,8 @@ const Document = () => {
             const thumbnail = files[0].thumbnails[0];
             return (
               <ArtboardLayout key={idx}>
-                <Link to={getArtboardRoute({ documentId, idx })}>
-                  <ArtboardImgLayout>
+                <ArtboardImgLayout>
+                  <Link to={getArtboardRoute({ documentId, idx })}>
                     <img
                       style={{
                         width: thumbnail.width,
@@ -129,8 +129,8 @@ const Document = () => {
                       src={thumbnail.url}
                       alt={name}
                     />
-                  </ArtboardImgLayout>
-                </Link>
+                  </Link>
+                </ArtboardImgLayout>
                 <ArtboardTitle key={idx}>{name}</ArtboardTitle>
               </ArtboardLayout>
             );
