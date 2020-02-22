@@ -8,6 +8,10 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 - Install [node.js](https://nodejs.org/en/download/) (latest stable version should be Ok)
 - Install [yarn](https://yarnpkg.com/docs/install) (latest stable version should be Ok)
+- Execute `yarn` from the `app` directory
+
+## How to run?
+
 - Execute `yarn && yarn start` from the `app` directory
 
 ## Decisions

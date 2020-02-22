@@ -112,7 +112,7 @@ const Document = () => {
         <Header>
           <Logo />
           <VerticalDivider />
-          <HeaderText>{document.name}</HeaderText>
+          <HeaderText>{document.version.document.name}</HeaderText>
         </Header>
         <View>
           {document.version.document.artboards.entries.map(
