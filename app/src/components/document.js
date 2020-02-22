@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useParams, useHistory } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { getArtboardRoute } from "../utils/routes";
 import { DEFAULT_DOCUMENT_ROUTE } from "../constants/routes";
 import { BLACK, GREY } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
@@ -79,8 +80,8 @@ const Document = () => {
 
   React.useEffect(() => {
     queryDocument(documentId).then(document => {
-      setIsLoading(false);
       setDocument(document.data.share);
+      setIsLoading(false);
     });
   }, [documentId]);
 
@@ -91,8 +92,6 @@ const Document = () => {
       <>
         <Header>
           <Logo />
-          <VerticalDivider />
-          <HeaderText>Unknown</HeaderText>
         </Header>
         <CenteredView>
           <ErrorText>{`🤦‍♂️`}</ErrorText>
@@ -115,11 +114,12 @@ const Document = () => {
           <HeaderText>{document.version.document.name}</HeaderText>
         </Header>
         <View>
-          {document.version.document.artboards.entries.map(
-            ({ name, files }, idx) => {
-              const thumbnail = files[0].thumbnails[0];
-              return (
-                <ArtboardLayout key={idx}>
+          {document.version.document.artboards.entries.map((artboard, idx) => {
+            const { files, name } = artboard;
+            const thumbnail = files[0].thumbnails[0];
+            return (
+              <ArtboardLayout key={idx}>
+                <Link to={getArtboardRoute({ documentId, idx })}>
                   <ArtboardImgLayout>
                     <img
                       style={{
@@ -130,11 +130,11 @@ const Document = () => {
                       alt={name}
                     />
                   </ArtboardImgLayout>
-                  <ArtboardTitle key={idx}>{name}</ArtboardTitle>
-                </ArtboardLayout>
-              );
-            }
-          )}
+                </Link>
+                <ArtboardTitle key={idx}>{name}</ArtboardTitle>
+              </ArtboardLayout>
+            );
+          })}
         </View>
       </>
     );

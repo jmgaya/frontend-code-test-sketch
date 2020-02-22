@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Document from "./components/document";
+import Artboard from "./components/artboard";
 import {
   ARTBOARD_ROUTE,
   DOCUMENT_ROUTE,
@@ -12,9 +13,9 @@ const App = () => (
   <BrowserRouter>
     <Switch>
       <Route
-        path={`${DOCUMENT_ROUTE}/:documentId${ARTBOARD_ROUTE}/:artboardId`}
+        path={`${DOCUMENT_ROUTE}/:documentId${ARTBOARD_ROUTE}/:artboardIdx`}
       >
-        <p> Artboard </p>
+        <Artboard />
       </Route>
       <Route path={`${DOCUMENT_ROUTE}/:documentId`}>
         <Document />

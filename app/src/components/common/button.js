@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { WHITE } from "../../constants/colors";
 
-const Text = styled.div`
+const Touchable = styled.div`
   text-decoration: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
@@ -35,7 +35,7 @@ const Text = styled.div`
 `;
 
 const Button = ({ text, handleClick }) => (
-  <Text onClick={handleClick}>{text}</Text>
+  <Touchable onClick={handleClick}>{text}</Touchable>
 );
 
 export default Button;

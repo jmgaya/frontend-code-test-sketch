@@ -34,3 +34,11 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Using **Roboto** as main font, but with **swap**, so the browser will initially show a fallback font, then once the Google Font has downloaded it will swap the fonts.
 * Delaying **loading spinner** 1s manually trying to mimic React.lazy loading when fetching data (in this case, the required document). This practice intends to avoid a "spinner party" when our UI requires several parts to be fetched/rendered independently one from another.
 * Display error case when the document could not be fetched.
+
+## Improvements
+
+* Avoid using texts without a **translation tool** for language localization.
+* Improve `constants/styles` animations, because it only allows a single animation to be used (e.g. You can't use directly `FADE_IN_ANIMATION` when rotating the `spinner.js`).
+* Avoid duplicated GraphQL queries with some caching strategy. This could be solved with several strategies:
+    * Using some kind of [context](https://reactjs.org/docs/context.html) which holds all the information about the **application state** combined with **useReducer** as shown [here](https://github.com/jmgaya/frontend-shopping-cart-challenge/blob/master/app/src/store/index.js)
+    * Caching each successfull **query** internally when requesting the [API](https://graphql.sketch.cloud/api) and returning this value if cached.
