@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BLACK } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
 import { FADE_IN_ANIMATION } from "../constants/styles";
 import Header from "./common/header";
 import Spinner from "./common/spinner";
+import { ReactComponent as CloseIcon } from "../assets/close-icon.svg";
 import { queryDocument } from "../utils/query";
+import { getDocumentRoute } from "../utils/routes";
 
 const HeaderText = styled.h1`
+  margin-left: 16px;
   font-size: ${FONT_SIZE_L};
   color: ${BLACK};
   ${FADE_IN_ANIMATION}
@@ -67,6 +70,9 @@ const Artboard = () => {
     return (
       <>
         <Header>
+          <Link to={getDocumentRoute(documentId)}>
+            <CloseIcon />
+          </Link>
           <HeaderText>{artboard.name}</HeaderText>
         </Header>
         <CenteredView>
