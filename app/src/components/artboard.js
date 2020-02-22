@@ -32,6 +32,12 @@ const CenteredView = styled(View)`
   height: 100%;
 `;
 
+const ArtboardImg = styled.img`
+  padding: 16px;
+  max-width: 100%;
+  max-height: 80vh;
+`;
+
 const Loading = () => (
   <>
     <Header />
@@ -58,15 +64,14 @@ const Artboard = () => {
   if (loading) {
     return <Loading />;
   } else {
-    console.log(artboard);
     return (
       <>
         <Header>
           <HeaderText>{artboard.name}</HeaderText>
         </Header>
-        <View>
-          <img src={artboard.files[0].url} alt={artboard.name} />
-        </View>
+        <CenteredView>
+          <ArtboardImg src={artboard.files[0].url} alt={artboard.name} />
+        </CenteredView>
       </>
     );
   }
