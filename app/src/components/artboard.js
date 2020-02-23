@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { getArtboardRoute } from "../utils/routes";
 import { BLACK } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
 import { FADE_IN_ANIMATION } from "../constants/styles";
 import Header from "./common/header";
 import Spinner from "./common/spinner";
+import Paginator from "./common/paginator";
 import { ReactComponent as CloseIcon } from "../assets/close-icon.svg";
 import { queryDocument } from "../utils/query";
 import { getDocumentRoute } from "../utils/routes";
@@ -41,9 +43,13 @@ const ArtboardImg = styled.img`
   max-height: 100%;
 `;
 
-const Loading = () => (
+const Loading = ({ documentId }) => (
   <>
-    <Header />
+    <Header>
+      <Link to={getDocumentRoute(documentId)}>
+        <CloseIcon />
+      </Link>
+    </Header>
     <CenteredView>
       <Spinner />
     </CenteredView>
@@ -77,11 +83,16 @@ const getArtboardImageSrc = ({ artboard, containerWidth, containerHeight }) => {
 
 const Artboard = () => {
   const { documentId, artboardIdx } = useParams();
+  const history = useHistory();
   const [loading, setIsLoading] = React.useState(true);
   const [artboard, setArboard] = React.useState(null);
+  const [documentLength, setDocumentLength] = React.useState(null);
 
   React.useEffect(() => {
     queryDocument(documentId).then(document => {
+      setDocumentLength(
+        document.data.share.version.document.artboards.entries.length
+      );
       setArboard(
         document.data.share.version.document.artboards.entries[artboardIdx]
       );
@@ -104,7 +115,7 @@ const Artboard = () => {
   );
 
   if (loading) {
-    return <Loading />;
+    return <Loading documentId={documentId} />;
   } else {
     return (
       <>
@@ -113,6 +124,28 @@ const Artboard = () => {
             <CloseIcon />
           </Link>
           <HeaderText>{artboard.name}</HeaderText>
+          <Paginator
+            index={artboardIdx}
+            length={documentLength}
+            handleLeftClick={() => {
+              setIsLoading(true);
+              history.push(
+                getArtboardRoute({
+                  documentId,
+                  idx: parseInt(artboardIdx) - 1
+                })
+              );
+            }}
+            handleRightClick={() => {
+              setIsLoading(true);
+              history.push(
+                getArtboardRoute({
+                  documentId,
+                  idx: parseInt(artboardIdx) + 1
+                })
+              );
+            }}
+          />
         </Header>
         <CenteredView ref={measuredRef}>
           <ArtboardImg alt={artboard.name} />
