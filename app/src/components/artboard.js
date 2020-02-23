@@ -33,12 +33,12 @@ const CenteredView = styled(View)`
   justify-content: center;
   align-items: center;
   height: 100%;
+  padding: 80px 16px 16px 16px;
 `;
 
 const ArtboardImg = styled.img`
-  padding: 16px;
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 100%;
 `;
 
 const Loading = () => (
@@ -49,6 +49,31 @@ const Loading = () => (
     </CenteredView>
   </>
 );
+
+const sortByWidthAndHeightDesc = (a, b) =>
+  a.width + a.height > b.width + b.height ? -1 : 1;
+
+const artboardFitsIntoDocument = ({
+  containerWidth,
+  containerHeight,
+  artboard: { width, height }
+}) => containerWidth >= width && containerHeight >= height;
+
+const getArtboardImageSrc = ({ artboard, containerWidth, containerHeight }) => {
+  const sortedDescFiles = artboard.files.sort(sortByWidthAndHeightDesc);
+
+  const suitableArtboard = sortedDescFiles.find(artboard =>
+    artboardFitsIntoDocument({
+      containerWidth,
+      containerHeight,
+      artboard
+    })
+  );
+
+  return suitableArtboard
+    ? suitableArtboard.url
+    : sortedDescFiles[sortedDescFiles.length - 1].url;
+};
 
 const Artboard = () => {
   const { documentId, artboardIdx } = useParams();
@@ -64,6 +89,20 @@ const Artboard = () => {
     });
   }, [documentId, artboardIdx]);
 
+  const measuredRef = React.useCallback(
+    el => {
+      if (el !== null && artboard) {
+        const image = el.getElementsByTagName("img")[0];
+        image.src = getArtboardImageSrc({
+          artboard,
+          containerWidth: el.offsetWidth,
+          containerHeight: el.offsetHeight
+        });
+      }
+    },
+    [artboard]
+  );
+
   if (loading) {
     return <Loading />;
   } else {
@@ -75,8 +114,8 @@ const Artboard = () => {
           </Link>
           <HeaderText>{artboard.name}</HeaderText>
         </Header>
-        <CenteredView>
-          <ArtboardImg src={artboard.files[0].url} alt={artboard.name} />
+        <CenteredView ref={measuredRef}>
+          <ArtboardImg alt={artboard.name} />
         </CenteredView>
       </>
     );

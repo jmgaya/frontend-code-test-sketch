@@ -26,7 +26,7 @@ const View = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   background: transparent;
-  padding-top: 80px;
+  padding: 80px 16px 16px 16px;
   ${FADE_IN_ANIMATION}
 `;
 

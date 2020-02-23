@@ -20,6 +20,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Using [React Router](https://reacttraining.com/react-router/web/) for routing simplicity.
 * **Document routes** have `/document/document-id` shape
 * **Artboard routes** have `/document/document-id/artboard/artboard-id` shape
+* Using **UPPERCASE** for constants.
 * Implemented **Load different documents depending on the URL** bonus point through `/document/document-id` routes, defaulting to `document/Y8wDM` when accessing `/` route
 * Using [styled components](https://styled-components.com/) because Sketch is internally using **styled components**. On my day by day basis I use [JSS](https://cssinjs.org/) with its main advantages (and disavantages) over **styled components**
 * Removed all the logic referring [Service Workers](https://developers.google.com/web/fundamentals/primers/service-workers) because it's not a requirement.
@@ -35,11 +36,15 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Delaying **loading spinner** 1s manually trying to mimic React.lazy loading when fetching data (in this case, the required document). This practice intends to avoid a "spinner party" when our UI requires several parts to be fetched/rendered independently one from another.
 * Display error case when the document could not be fetched.
 * Using directly some **assets** provided in the `.svg` format through `ReactComponent` (provided in [CRA](http://create-react-app.dev/)).
+* Artboard image URL is calculated by sorting all available URLs in descendant order. Afterward we'll take the first URL which fits into the image container. In case there's no image which fits properly into the container space, we take the smallest image. This only happens when the component mounts in `artboard.js`
 
 ## Improvements
 
+* Error scenario when artboard index is out of bounds for given document (e.g. `/document/Y8wDM/artboard/25`)
+* Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
 * Avoid using texts without a **translation tool** for language localization.
+* Create a `constants/spacings` file, holding a well defined set of spacings our design follows (e.g. SPACING_S(12), SPACING_M(14), ...)
 * Improve `constants/styles` animations, because it only allows a single animation to be used (e.g. You can't use directly `FADE_IN_ANIMATION` when rotating the `spinner.js`).
 * Avoid duplicated GraphQL queries with some caching strategy. This could be solved with several strategies:
     * Using some kind of [context](https://reactjs.org/docs/context.html) which holds all the information about the **application state** combined with **useReducer** as shown [here](https://github.com/jmgaya/frontend-shopping-cart-challenge/blob/master/app/src/store/index.js)
-    * Caching each successfull **query** internally when requesting the [API](https://graphql.sketch.cloud/api) and returning this value if cached.
+    * Caching each successfull **query** internally when requesting the [API](https://graphql.sketch.cloud/api) and returning this value if cached. This strategy requires another mechanism,  because subsequent calls could hit the server if our product demands. In this case, we can use a **TTL** mechanism, meaning we'll query the API if the cached data has been stored for a long.
