@@ -41,6 +41,8 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 ## Improvements
 
+* Testing in general.
+* Bind **Left** and **Right** keyboard keys for a simple Artboard navigation.
 * Error scenario when artboard index is out of bounds for given document (e.g. `/document/Y8wDM/artboard/25`)
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
 * Avoid using texts without a **translation tool** for language localization.
