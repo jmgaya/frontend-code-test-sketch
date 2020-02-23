@@ -19,7 +19,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * [CRA](http://create-react-app.dev/) for simplicity purposes when setting up an entire new React project
 * Using [React Router](https://reacttraining.com/react-router/web/) for routing simplicity.
 * **Document routes** have `/document/document-id` shape
-* **Artboard routes** have `/document/document-id/artboard/artboard-id` shape
+* **Artboard routes** have `/document/document-id/artboard/artboard-idx` shape
 * Using **UPPERCASE** for constants.
 * Implemented **Load different documents depending on the URL** bonus point through `/document/document-id` routes, defaulting to `document/Y8wDM` when accessing `/` route
 * Using [styled components](https://styled-components.com/) because Sketch is internally using **styled components**. On my day by day basis I use [JSS](https://cssinjs.org/) with its main advantages (and disavantages) over **styled components**
@@ -35,6 +35,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Using **Roboto** as main font, but with **swap**, so the browser will initially show a fallback font, then once the Google Font has downloaded it will swap the fonts.
 * Delaying **loading spinner** 1s manually trying to mimic React.lazy loading when fetching data (in this case, the required document). This practice intends to avoid a "spinner party" when our UI requires several parts to be fetched/rendered independently one from another.
 * Display error case when the document could not be fetched.
+* Indexes in artboard routes start at 0 (e.g. `http://localhost:3000/document/Y8wDM/artboard/0`), but the `Paginator` displays a "less nerd" index, starting at 1.
 * Using directly some **assets** provided in the `.svg` format through `ReactComponent` (provided in [CRA](http://create-react-app.dev/)).
 * Artboard image URL is calculated by sorting all available URLs in descendant order. Afterward we'll take the first URL which fits into the image container. In case there's no image which fits properly into the container space, we take the smallest image. This only happens when the component mounts in `artboard.js`
 

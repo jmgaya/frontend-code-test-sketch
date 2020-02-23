@@ -14,11 +14,11 @@ const Layout = styled.div`
 `;
 
 const StyledArrowLeft = styled(ArrowLeft)`
-  margin-right: 16px;
   cursor: pointer;
 `;
 
 const Index = styled.h1`
+  margin-left: 16px;
   font-size: ${FONT_SIZE_L};
 `;
 
@@ -29,28 +29,30 @@ const Separator = styled.h2`
 `;
 
 const Length = styled.h1`
+  margin-right: 16px;
   font-size: ${FONT_SIZE_L};
   cursor: pointer;
 `;
 
 const StyledArrowRight = styled(ArrowRight)`
-  margin-left: 16px;
   cursor: pointer;
 `;
 
 const Paginator = ({
   index,
   length,
+  disableLeft = false,
+  disableRight = false,
   handleLeftClick,
   handleRightClick,
   separator = "/"
 }) => (
   <Layout>
-    <StyledArrowLeft onClick={() => handleLeftClick()} />
+    {!disableLeft && <StyledArrowLeft onClick={() => handleLeftClick()} />}
     <Index>{index}</Index>
     <Separator>{separator}</Separator>
     <Length>{length}</Length>
-    <StyledArrowRight onClick={() => handleRightClick()} />
+    {!disableRight && <StyledArrowRight onClick={() => handleRightClick()} />}
   </Layout>
 );
 
