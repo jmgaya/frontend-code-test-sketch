@@ -38,11 +38,13 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Indexes in artboard routes start at 0 (e.g. `http://localhost:3000/document/Y8wDM/artboard/0`), but the `Paginator` displays a "less nerd" index, starting at 1.
 * Using directly some **assets** provided in the `.svg` format through `ReactComponent` (provided in [CRA](http://create-react-app.dev/)).
 * Artboard image URL is calculated by sorting all available URLs in descendant order. Afterward we'll take the first URL which fits into the image container. In case there's no image which fits properly into the container space, we take the smallest image. This only happens when the component mounts in `artboard.js`
-* Tested utils functions with `utils/__tests__/routes-test.js` and `utils/__tests__/query-test.js`.
+* Tested [routes](./app/src/utils/__tests__/routes-test.js) and [query](./app/src/utils/__tests__/query-test.js) utils.
+* Tested [Button](./app/src/components/common/__tests__/button-test.js) React component.
 
 ## Improvements
 
-* Testing React Components.
+* [Snapshot testing](https://jestjs.io/docs/en/snapshot-testing#snapshot-testing-with-jest).
+* Testing React complex components like `artboard.js` or `document.js`. In those scenarios we'll should make use of [act](https://testing-library.com/docs/preact-testing-library/api#act) because of the usage of hooks and API requests.
 * Bind **Left** and **Right** keyboard keys for a simple Artboard navigation.
 * Error scenario when artboard index is out of bounds for given document (e.g. `/document/Y8wDM/artboard/25`)
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
