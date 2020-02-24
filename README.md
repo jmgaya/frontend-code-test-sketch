@@ -45,6 +45,8 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 * [Snapshot testing](https://jestjs.io/docs/en/snapshot-testing#snapshot-testing-with-jest).
 * Testing React complex components like `artboard.js` or `document.js`. In those scenarios we'll should make use of [act](https://testing-library.com/docs/preact-testing-library/api#act) because of the usage of hooks and API requests.
+* A more restrictive **eslint configuration** (e.g. `debugger` is allowed).
+* Pre-commit hook which runs [eslint](https://eslint.org/) and [prettier](https://prettier.io/). This pretends to avoid commiting code that doesn't met our code standards (e.g. [husky](https://github.com/typicode/husky))
 * Bind **Left** and **Right** keyboard keys for a simple Artboard navigation.
 * Error scenario when artboard index is out of bounds for given document (e.g. `/document/Y8wDM/artboard/25`)
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
