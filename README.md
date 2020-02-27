@@ -52,7 +52,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
 * Avoid using texts without a **translation tool** for language localization.
 * Create a `constants/spacings` file, holding a well defined set of spacings our design follows (e.g. SPACING_S(12), SPACING_M(14), ...)
-* Improve `constants/styles` animations, because it only allows a single animation to be used (e.g. You can't use directly `FADE_IN_ANIMATION` when rotating the `spinner.js`).
+* Improve `constants/styles` animations, because it only allows a single animation to be used, for example, by creating HoC whose main proposal is animating inner children.
 * Avoid duplicated GraphQL queries with some caching strategy. This could be solved with several strategies:
     * Using some kind of [context](https://reactjs.org/docs/context.html) which holds all the information about the **application state** combined with **useReducer** as shown [here](https://github.com/jmgaya/frontend-shopping-cart-challenge/blob/master/app/src/store/index.js)
     * Caching each successfull **query** internally when requesting the [API](https://graphql.sketch.cloud/api) and returning this value if cached. This strategy requires another mechanism,  because subsequent calls could hit the server if our product demands. In this case, we can use a **TTL** mechanism, meaning we'll query the API if the cached data has been stored for a long.
