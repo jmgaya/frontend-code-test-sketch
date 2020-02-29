@@ -1,15 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Header from "./common/header";
+import Paginator from "./common/paginator";
 import { getArtboardRoute } from "../utils/routes";
 import { BLACK } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
 import { FADE_IN_ANIMATION } from "../constants/styles";
-import Header from "./common/header";
-import Spinner from "./common/spinner";
-import Paginator from "./common/paginator";
 import { ReactComponent as CloseIcon } from "../assets/close-icon.svg";
-import { queryDocument } from "../utils/query";
 import { getDocumentRoute } from "../utils/routes";
 
 const SeparatedHeader = styled(Header)`
@@ -29,42 +27,22 @@ const HeaderText = styled.h1`
   ${FADE_IN_ANIMATION}
 `;
 
-const View = styled.div`
+const ArtboardImageView = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
-  background: transparent;
-  padding-top: 80px;
-  ${FADE_IN_ANIMATION}
-`;
-
-const CenteredView = styled(View)`
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  background: transparent;
   padding: 80px 16px 16px 16px;
+  ${FADE_IN_ANIMATION}
 `;
 
 const ArtboardImg = styled.img`
   max-width: 100%;
   max-height: 100%;
 `;
-
-const Loading = ({ documentId }) => (
-  <>
-    <SeparatedHeader>
-      <Link to={getDocumentRoute(documentId)}>
-        <CloseIcon />
-      </Link>
-    </SeparatedHeader>
-    <CenteredView>
-      <Spinner />
-    </CenteredView>
-  </>
-);
 
 const sortByWidthAndHeightDesc = (a, b) =>
   a.width + a.height > b.width + b.height ? -1 : 1;
@@ -91,25 +69,8 @@ const getArtboardImageSrc = ({ artboard, containerWidth, containerHeight }) => {
     : sortedDescFiles[sortedDescFiles.length - 1].url;
 };
 
-const Artboard = () => {
-  const { documentId, artboardIdx } = useParams();
-  const artboardIndex = parseInt(artboardIdx);
+const Artboard = ({ documentId, documentLength, artboard, index }) => {
   const history = useHistory();
-  const [loading, setIsLoading] = React.useState(true);
-  const [artboard, setArboard] = React.useState(null);
-  const [documentLength, setDocumentLength] = React.useState(null);
-
-  React.useEffect(() => {
-    queryDocument(documentId).then(document => {
-      setDocumentLength(
-        document.data.share.version.document.artboards.entries.length
-      );
-      setArboard(
-        document.data.share.version.document.artboards.entries[artboardIndex]
-      );
-      setIsLoading(false);
-    });
-  }, [documentId, artboardIndex]);
 
   const measuredRef = React.useCallback(
     el => {
@@ -125,49 +86,43 @@ const Artboard = () => {
     [artboard]
   );
 
-  if (loading) {
-    return <Loading documentId={documentId} />;
-  } else {
-    return (
-      <>
-        <SeparatedHeader>
-          <HeaderInformation>
-            <Link to={getDocumentRoute(documentId)}>
-              <CloseIcon />
-            </Link>
-            <HeaderText>{artboard.name}</HeaderText>
-          </HeaderInformation>
-          <Paginator
-            index={artboardIndex + 1}
-            length={documentLength}
-            disableLeft={artboardIndex === 0}
-            disableRight={artboardIndex === documentLength - 1}
-            handleLeftClick={() => {
-              setIsLoading(true);
-              history.push(
-                getArtboardRoute({
-                  documentId,
-                  idx: artboardIndex - 1
-                })
-              );
-            }}
-            handleRightClick={() => {
-              setIsLoading(true);
-              history.push(
-                getArtboardRoute({
-                  documentId,
-                  idx: artboardIndex + 1
-                })
-              );
-            }}
-          />
-        </SeparatedHeader>
-        <CenteredView ref={measuredRef}>
-          <ArtboardImg alt={artboard.name} />
-        </CenteredView>
-      </>
-    );
-  }
+  return (
+    <>
+      <SeparatedHeader>
+        <HeaderInformation>
+          <Link to={getDocumentRoute(documentId)}>
+            <CloseIcon />
+          </Link>
+          <HeaderText>{artboard.name}</HeaderText>
+        </HeaderInformation>
+        <Paginator
+          index={index + 1}
+          length={documentLength}
+          disableLeft={index === 0}
+          disableRight={index === documentLength - 1}
+          handleLeftClick={() => {
+            history.push(
+              getArtboardRoute({
+                documentId,
+                idx: index - 1
+              })
+            );
+          }}
+          handleRightClick={() => {
+            history.push(
+              getArtboardRoute({
+                documentId,
+                idx: index + 1
+              })
+            );
+          }}
+        />
+      </SeparatedHeader>
+      <ArtboardImageView ref={measuredRef}>
+        <ArtboardImg alt={artboard.name} />
+      </ArtboardImageView>
+    </>
+  );
 };
 
 export default Artboard;
