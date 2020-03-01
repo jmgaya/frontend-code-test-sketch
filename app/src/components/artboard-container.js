@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
+import useDocument from "../hooks/use-document";
 import Header from "./common/header";
 import Spinner from "./common/spinner";
 import Artboard from "./artboard";
@@ -10,7 +11,6 @@ import { FONT_SIZE_L } from "../constants/fonts";
 import { BLACK } from "../constants/colors";
 import { ReactComponent as CloseIcon } from "../assets/close-icon.svg";
 import { getDocumentRoute } from "../utils/routes";
-import { queryDocument } from "../utils/query";
 
 const SeparatedHeader = styled(Header)`
   justify-content: space-between;
@@ -37,24 +37,8 @@ const View = styled.main`
 const ArtboardContainer = () => {
   const { documentId, artboardIdx } = useParams();
   const artboardIndex = parseInt(artboardIdx);
-  const [loading, setIsLoading] = React.useState(true);
-  const [artboard, setArtboard] = React.useState(null);
-  const [documentLength, setDocumentLength] = React.useState(null);
-
-  React.useEffect(() => {
-    setIsLoading(true);
-  }, [artboardIdx]);
-
-  React.useEffect(() => {
-    queryDocument(documentId).then(document => {
-      const documentArtboards = document.data.share.version.document.artboards;
-      setDocumentLength(documentArtboards.entries.length);
-      if (artboardIndex < documentArtboards.entries.length) {
-        setArtboard(documentArtboards.entries[artboardIndex]);
-        setIsLoading(false);
-      }
-    });
-  }, [documentId, artboardIndex]);
+  const document = useDocument(documentId);
+  const artboard = document ? document.artboards[artboardIndex] : null;
 
   return (
     <>
@@ -62,18 +46,18 @@ const ArtboardContainer = () => {
         <Link to={getDocumentRoute(documentId)}>
           <CloseIcon />
         </Link>
-        {!loading && artboard && <HeaderText>{artboard.name}</HeaderText>}
+        {artboard && <HeaderText>{artboard.name}</HeaderText>}
         {artboard && (
           <ArtboardPaginator
             documentId={documentId}
             index={artboardIndex}
-            documentLength={documentLength}
+            documentLength={document.artboards.length}
           />
         )}
       </SeparatedHeader>
       <View>
-        {loading && <Spinner />}
-        {!loading && <Artboard artboard={artboard} />}
+        {!artboard && <Spinner />}
+        {artboard && <Artboard artboard={artboard} />}
       </View>
     </>
   );
