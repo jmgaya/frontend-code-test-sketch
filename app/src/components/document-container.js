@@ -30,7 +30,7 @@ const HeaderText = styled.h1`
   ${FADE_IN_ANIMATION}
 `;
 
-const ErrorText = styled.h2`
+const ErrorText = styled.h1`
   font-size: ${FONT_SIZE_XXL};
   color: ${BLACK};
   ${FADE_IN_ANIMATION}

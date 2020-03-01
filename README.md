@@ -31,7 +31,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Using [yarn](https://yarnpkg.com/) as the package manager because it comes with [CRA](http://create-react-app.dev/) and I'm using it on my day by day basis.
 * Using **fetch** for querying the API for simplicity.
 * Extracted **constants** like *colors*,  *routes* or *fonts* for "changing once, working everywhere" pattern.
-* Extracted **common** components as `Header`, `Spinner`, `Button` or `Logo` given its multiple usages.
+* Extracted **common** components as `Header`, `Spinner` or `Logo` given its multiple usages.
 * Using **Roboto** as main font, but with **swap**, so the browser will initially show a fallback font, then once the Google Font has downloaded it will swap the fonts.
 * Delaying **loading spinner** 1s manually trying to mimic React.lazy loading when fetching data (in this case, the required document). This practice intends to avoid a "spinner party" when our UI requires several parts to be fetched/rendered independently one from another.
 * Indexes in artboard routes start at 0 (e.g. `http://localhost:3000/document/Y8wDM/artboard/0`), but the `Paginator` displays a "less nerd" index, starting at 1.

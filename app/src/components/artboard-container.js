@@ -4,7 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import Header from "./common/header";
 import Spinner from "./common/spinner";
 import Artboard from "./artboard";
+import ArtboardPaginator from "./artboard-paginator";
 import { FADE_IN_ANIMATION } from "../constants/styles";
+import { FONT_SIZE_L } from "../constants/fonts";
+import { BLACK } from "../constants/colors";
 import { ReactComponent as CloseIcon } from "../assets/close-icon.svg";
 import { getDocumentRoute } from "../utils/routes";
 import { queryDocument } from "../utils/query";
@@ -13,30 +16,23 @@ const SeparatedHeader = styled(Header)`
   justify-content: space-between;
 `;
 
-const CenteredView = styled.div`
+const HeaderText = styled.h1`
+  margin-left: 16px;
+  font-size: ${FONT_SIZE_L};
+  color: ${BLACK};
+  ${FADE_IN_ANIMATION}
+`;
+
+const View = styled.main`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: transparent;
   padding: 80px 16px 16px 16px;
   ${FADE_IN_ANIMATION}
 `;
-
-const Loading = ({ documentId }) => (
-  <>
-    <SeparatedHeader>
-      <Link to={getDocumentRoute(documentId)}>
-        <CloseIcon />
-      </Link>
-    </SeparatedHeader>
-    <CenteredView>
-      <Spinner />
-    </CenteredView>
-  </>
-);
 
 const ArtboardContainer = () => {
   const { documentId, artboardIdx } = useParams();
@@ -60,18 +56,27 @@ const ArtboardContainer = () => {
     });
   }, [documentId, artboardIndex]);
 
-  if (loading) {
-    return <Loading documentId={documentId} />;
-  } else {
-    return (
-      <Artboard
-        artboard={artboard}
-        documentId={documentId}
-        documentLength={documentLength}
-        index={artboardIndex}
-      />
-    );
-  }
+  return (
+    <>
+      <SeparatedHeader>
+        <Link to={getDocumentRoute(documentId)}>
+          <CloseIcon />
+        </Link>
+        {!loading && artboard && <HeaderText>{artboard.name}</HeaderText>}
+        {artboard && (
+          <ArtboardPaginator
+            documentId={documentId}
+            index={artboardIndex}
+            documentLength={documentLength}
+          />
+        )}
+      </SeparatedHeader>
+      <View>
+        {loading && <Spinner />}
+        {!loading && <Artboard artboard={artboard} />}
+      </View>
+    </>
+  );
 };
 
 export default ArtboardContainer;
