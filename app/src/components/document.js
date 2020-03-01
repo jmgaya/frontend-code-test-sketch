@@ -1,17 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getArtboardRoute } from "../utils/routes";
-import { DEFAULT_DOCUMENT_ROUTE } from "../constants/routes";
 import { BLACK, GREY } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
 import { FADE_IN_ANIMATION } from "../constants/styles";
 import Header from "./common/header";
 import Logo from "./common/logo";
-import Spinner from "./common/spinner";
 import VerticalDivider from "./common/vertical-divider";
-import Button from "./common/button";
-import { queryDocument } from "../utils/query";
 
 const HeaderText = styled.h1`
   font-size: ${FONT_SIZE_L};
@@ -28,17 +24,6 @@ const View = styled.div`
   background: transparent;
   padding: 80px 16px 16px 16px;
   ${FADE_IN_ANIMATION}
-`;
-
-const CenteredView = styled(View)`
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const ErrorText = styled.h1`
-  font-size: 64px;
 `;
 
 const ArtboardLayout = styled.div`
@@ -61,84 +46,39 @@ const ArtboardTitle = styled.h2`
   color: ${GREY};
 `;
 
-const Loading = () => (
-  <>
-    <Header>
-      <Logo />
-    </Header>
-    <CenteredView>
-      <Spinner />
-    </CenteredView>
-  </>
-);
-
-const Document = () => {
-  const { documentId } = useParams();
-  const history = useHistory();
-  const [loading, setIsLoading] = React.useState(true);
-  const [document, setDocument] = React.useState(null);
-
-  React.useEffect(() => {
-    queryDocument(documentId).then(document => {
-      setDocument(document.data.share);
-      setIsLoading(false);
-    });
-  }, [documentId]);
-
-  if (loading) {
-    return <Loading />;
-  } else if (!document) {
-    return (
-      <>
-        <Header>
-          <Logo />
-        </Header>
-        <CenteredView>
-          <ErrorText>{`🤦‍♂️`}</ErrorText>
-          <Button
-            handleClick={() => {
-              setIsLoading(true);
-              history.replace(DEFAULT_DOCUMENT_ROUTE);
-            }}
-            text="Try with another document"
-          />
-        </CenteredView>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Header>
-          <Logo />
-          <VerticalDivider />
-          <HeaderText>{document.version.document.name}</HeaderText>
-        </Header>
-        <View>
-          {document.version.document.artboards.entries.map((artboard, idx) => {
-            const { files, name } = artboard;
-            const thumbnail = files[0].thumbnails[0];
-            return (
-              <ArtboardLayout key={idx}>
-                <ArtboardImgLayout>
-                  <Link to={getArtboardRoute({ documentId, idx })}>
-                    <img
-                      style={{
-                        width: thumbnail.width,
-                        height: thumbnail.height
-                      }}
-                      src={thumbnail.url}
-                      alt={name}
-                    />
-                  </Link>
-                </ArtboardImgLayout>
-                <ArtboardTitle key={idx}>{name}</ArtboardTitle>
-              </ArtboardLayout>
-            );
-          })}
-        </View>
-      </>
-    );
-  }
+const Document = ({ document, documentId }) => {
+  return (
+    <>
+      <Header>
+        <Logo />
+        <VerticalDivider />
+        <HeaderText>{document.version.document.name}</HeaderText>
+      </Header>
+      <View>
+        {document.version.document.artboards.entries.map((artboard, idx) => {
+          const { files, name } = artboard;
+          const thumbnail = files[0].thumbnails[0];
+          return (
+            <ArtboardLayout key={idx}>
+              <ArtboardImgLayout>
+                <Link to={getArtboardRoute({ documentId, idx })}>
+                  <img
+                    style={{
+                      width: thumbnail.width,
+                      height: thumbnail.height
+                    }}
+                    src={thumbnail.url}
+                    alt={name}
+                  />
+                </Link>
+              </ArtboardImgLayout>
+              <ArtboardTitle key={idx}>{name}</ArtboardTitle>
+            </ArtboardLayout>
+          );
+        })}
+      </View>
+    </>
+  );
 };
 
 export default Document;
