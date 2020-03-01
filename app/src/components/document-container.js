@@ -42,10 +42,14 @@ const DocumentContainer = () => {
   const [document, setDocument] = React.useState(null);
 
   React.useEffect(() => {
-    queryDocument(documentId).then(document => {
-      setDocument(document.data.share);
-      setIsLoading(false);
-    });
+    queryDocument(documentId)
+      .then(document => {
+        setDocument(document.data.share);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
   }, [documentId]);
 
   return (
@@ -63,7 +67,7 @@ const DocumentContainer = () => {
           <Document documentId={documentId} document={document} />
         )}
         {!loading && !document && (
-          <ErrorText>{`Document ${documentId} does not exist`}</ErrorText>
+          <ErrorText>{`Unable to load document ${documentId}`}</ErrorText>
         )}
       </View>
     </>
