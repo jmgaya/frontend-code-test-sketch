@@ -40,6 +40,8 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Using [container pattern](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) for components. A container does data fetching and then renders its corresponding sub-component.
 * Tested [routes](./app/src/utils/__tests__/routes-test.js) and [query](./app/src/utils/__tests__/query-test.js) utils.
 * Tested [Button](./app/src/components/common/__tests__/button-test.js) React component.
+* Created [useDocument hook](./app/src/hooks/use-document.js), because both `artboard` and `document` containers fetch the **document** given in the **URL**
+* Centralised [Document model creation](./app/src/models/document.js), building a simpler model for the front-end.
 
 ## Improvements
 

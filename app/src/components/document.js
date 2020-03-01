@@ -40,7 +40,7 @@ const ArtboardCaption = styled.figcaption`
 const Document = ({ document, documentId }) => {
   return (
     <View>
-      {document.version.document.artboards.entries.map((artboard, idx) => {
+      {document.artboards.map((artboard, idx) => {
         const { files, name } = artboard;
         const thumbnail = files[0].thumbnails[0];
         return (
