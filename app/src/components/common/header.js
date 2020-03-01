@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { WHITE } from "../../constants/colors";
 
-const Header = styled.div`
+const Header = styled.header`
   display: flex;
   position: fixed;
   height: 64px;

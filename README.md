@@ -34,7 +34,6 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Extracted **common** components as `Header`, `Spinner`, `Button` or `Logo` given its multiple usages.
 * Using **Roboto** as main font, but with **swap**, so the browser will initially show a fallback font, then once the Google Font has downloaded it will swap the fonts.
 * Delaying **loading spinner** 1s manually trying to mimic React.lazy loading when fetching data (in this case, the required document). This practice intends to avoid a "spinner party" when our UI requires several parts to be fetched/rendered independently one from another.
-* Display error case when the document could not be fetched.
 * Indexes in artboard routes start at 0 (e.g. `http://localhost:3000/document/Y8wDM/artboard/0`), but the `Paginator` displays a "less nerd" index, starting at 1.
 * Using directly some **assets** provided in the `.svg` format through `ReactComponent` (provided in [CRA](http://create-react-app.dev/)).
 * Artboard image URL is calculated by sorting all available URLs in descendant order. Afterward we'll take the first URL which fits into the image container. In case there's no image which fits properly into the container space, we take the smallest image. This only happens when the component mounts in `artboard.js`
@@ -49,7 +48,6 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * A more restrictive **eslint configuration** (e.g. `debugger` is allowed).
 * Pre-commit hook which runs [eslint](https://eslint.org/) and [prettier](https://prettier.io/). This pretends to avoid commiting code that doesn't met our code standards (e.g. [husky](https://github.com/typicode/husky))
 * Bind **Left** and **Right** keyboard keys for a simple Artboard navigation.
-* Error scenario when artboard index is out of bounds for given document (e.g. `/document/Y8wDM/artboard/25`)
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
 * Avoid using texts without a **translation tool** for language localization.
 * Create a `constants/spacings` file, holding a well defined set of spacings our design follows (e.g. SPACING_S(12), SPACING_M(14), ...)

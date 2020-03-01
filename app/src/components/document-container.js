@@ -1,46 +1,43 @@
 import React from "react";
 import styled from "styled-components";
-import { useParams, useHistory } from "react-router-dom";
-import { DEFAULT_DOCUMENT_ROUTE } from "../constants/routes";
+import { useParams } from "react-router-dom";
 import { FADE_IN_ANIMATION } from "../constants/styles";
+import { FONT_SIZE_L, FONT_SIZE_XXL } from "../constants/fonts";
+import { BLACK } from "../constants/colors";
 import Document from "./document";
 import Header from "./common/header";
 import Logo from "./common/logo";
 import Spinner from "./common/spinner";
-import Button from "./common/button";
+import VerticalDivider from "./common/vertical-divider";
 import { queryDocument } from "../utils/query";
 
-const View = styled.div`
+const View = styled.main`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background: transparent;
-  padding: 80px 16px 16px 16px;
+  padding-top: 64px;
   ${FADE_IN_ANIMATION}
 `;
 
-const ErrorText = styled.h1`
-  font-size: 64px;
+const HeaderText = styled.h1`
+  font-size: ${FONT_SIZE_L};
+  color: ${BLACK};
+  ${FADE_IN_ANIMATION}
 `;
 
-const Loading = () => (
-  <>
-    <Header>
-      <Logo />
-    </Header>
-    <View>
-      <Spinner />
-    </View>
-  </>
-);
+const ErrorText = styled.h2`
+  font-size: ${FONT_SIZE_XXL};
+  color: ${BLACK};
+  ${FADE_IN_ANIMATION}
+`;
 
 const DocumentContainer = () => {
   const { documentId } = useParams();
-  const history = useHistory();
   const [loading, setIsLoading] = React.useState(true);
   const [document, setDocument] = React.useState(null);
 
@@ -51,29 +48,26 @@ const DocumentContainer = () => {
     });
   }, [documentId]);
 
-  if (loading) {
-    return <Loading />;
-  } else if (!document) {
-    return (
-      <>
-        <Header>
-          <Logo />
-        </Header>
-        <View>
-          <ErrorText>{`🤦‍♂️`}</ErrorText>
-          <Button
-            handleClick={() => {
-              setIsLoading(true);
-              history.replace(DEFAULT_DOCUMENT_ROUTE);
-            }}
-            text="Try with another document"
-          />
-        </View>
-      </>
-    );
-  } else {
-    return <Document documentId={documentId} document={document} />;
-  }
+  return (
+    <>
+      <Header>
+        <Logo />
+        <VerticalDivider />
+        {!loading && document && (
+          <HeaderText>{document.version.document.name}</HeaderText>
+        )}
+      </Header>
+      <View>
+        {loading && <Spinner />}
+        {!loading && document && (
+          <Document documentId={documentId} document={document} />
+        )}
+        {!loading && !document && (
+          <ErrorText>{`Document ${documentId} does not exist`}</ErrorText>
+        )}
+      </View>
+    </>
+  );
 };
 
 export default DocumentContainer;
