@@ -17,7 +17,7 @@ const View = styled.section`
   ${FADE_IN_ANIMATION}
 `;
 
-const ArtboardLayout = styled.figure`
+const ArtboardFigure = styled.figure`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,7 +44,7 @@ const Document = ({ document, documentId }) => {
         const { files, name } = artboard;
         const thumbnail = files[0].thumbnails[0];
         return (
-          <ArtboardLayout key={idx}>
+          <ArtboardFigure key={idx}>
             <ArtboardImgLayout>
               <Link to={getArtboardRoute({ documentId, idx })}>
                 <img
@@ -58,7 +58,7 @@ const Document = ({ document, documentId }) => {
               </Link>
             </ArtboardImgLayout>
             <ArtboardCaption key={idx}>{name}</ArtboardCaption>
-          </ArtboardLayout>
+          </ArtboardFigure>
         );
       })}
     </View>

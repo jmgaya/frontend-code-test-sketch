@@ -14,6 +14,16 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 - Execute `yarn && yarn start` from the `app` directory
 
+## Testing
+
+- Execute `yarn && yarn test` from the `app` directory
+
+---
+
+**Note:** This will execute Jest in `--watch` mode, you can easily run once the entire tests suite by executing `yarn test --watchAll=false` instead
+
+---
+
 ## Decisions
 
 * [CRA](http://create-react-app.dev/) for simplicity purposes when setting up an entire new React project
@@ -45,9 +55,14 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 ## Improvements
 
-* [Snapshot testing](https://jestjs.io/docs/en/snapshot-testing#snapshot-testing-with-jest).
+* Screenshot testing seeking better confidence when changing any visual stuff (e.g. [jest-image-snapshot](https://github.com/americanexpress/
 * Testing React complex components like `artboard.js` or `document.js`. In those scenarios we'll should make use of [act](https://testing-library.com/docs/preact-testing-library/api#act) because of the usage of hooks and API requests.
-* A more restrictive **eslint configuration** (e.g. `debugger` is allowed).
+* A more restrictive **linting configuration** with:
+    * [eslint plugin React](https://github.com/yannickcr/eslint-plugin-react)
+    * [stylelint](https://styled-components.com/docs/tooling#stylelint) while styiling with `styled-components`
+    * A more "vanilla Javascript" related plugin, like for example [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn).
+* Missing React propTypes and defaultProps (in case those last are needed).
+* Any Javascript static typing system seeking better documentation and more confidence when developing. By adding this feature we could avoid adding React propTypes.
 * Pre-commit hook which runs [eslint](https://eslint.org/) and [prettier](https://prettier.io/). This pretends to avoid commiting code that doesn't met our code standards (e.g. [husky](https://github.com/typicode/husky))
 * Bind **Left** and **Right** keyboard keys for a simple Artboard navigation.
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
@@ -57,3 +72,4 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Avoid duplicated GraphQL queries with some caching strategy. This could be solved with several strategies:
     * Using some kind of [context](https://reactjs.org/docs/context.html) which holds all the information about the **application state** combined with **useReducer** as shown [here](https://github.com/jmgaya/frontend-shopping-cart-challenge/blob/master/app/src/store/index.js)
     * Caching each successfull **query** internally when requesting the [API](https://graphql.sketch.cloud/api) and returning this value if cached. This strategy requires another mechanism,  because subsequent calls could hit the server if our product demands. In this case, we can use a **TTL** mechanism, meaning we'll query the API if the cached data has been stored for a long.
+* Any tracking mechanism for analytical decisions as our product is intended to evolve probably based on data.
