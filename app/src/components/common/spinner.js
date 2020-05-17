@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const Spinner = styled.svg`
+const WithRotation = styled.svg`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,20 +15,22 @@ const Spinner = styled.svg`
   }
 `;
 
-export default ({ delayDurationInMs = 800 }) => {
+const Spinner = ({ delayDurationInMs = 800 }) => {
   const [hidden, setHidden] = React.useState(true);
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
       setHidden(false);
-    }, parseInt(delayDurationInMs));
+    }, Number.parseInt(delayDurationInMs));
     return () => {
       clearTimeout(handler);
     };
   }, [delayDurationInMs]);
 
-  return hidden ? null : (
-    <Spinner
+  return hidden ? (
+    false
+  ) : (
+    <WithRotation
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       width="42"
@@ -63,6 +66,12 @@ export default ({ delayDurationInMs = 800 }) => {
           strokeDasharray="48.33 69.117"
         />{" "}
       </g>
-    </Spinner>
+    </WithRotation>
   );
 };
+
+Spinner.propTypes = {
+  delayDurationInMs: PropTypes.number,
+};
+
+export default Spinner;

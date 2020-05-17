@@ -17,6 +17,13 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `yarn lint`
+Runs [eslint](https://eslint.org/) through all the project with the following plugin recommendations:
+
+- [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn)
+- [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest)
+- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

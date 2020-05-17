@@ -1,10 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { getArtboardRoute } from "../utils/routes";
 import { GREY } from "../constants/colors";
 import { FONT_SIZE_L } from "../constants/fonts";
 import { FADE_IN_ANIMATION } from "../constants/styles";
+import { artboard } from "../types";
 
 const View = styled.section`
   width: 100%;
@@ -37,7 +39,7 @@ const ArtboardCaption = styled.figcaption`
   color: ${GREY};
 `;
 
-const Document = ({ document, documentId }) => {
+const Document = ({ documentId, document }) => {
   return (
     <View>
       {document.artboards.map((artboard, idx) => {
@@ -50,7 +52,7 @@ const Document = ({ document, documentId }) => {
                 <img
                   style={{
                     width: thumbnail.width,
-                    height: thumbnail.height
+                    height: thumbnail.height,
                   }}
                   src={thumbnail.url}
                   alt={name}
@@ -63,6 +65,13 @@ const Document = ({ document, documentId }) => {
       })}
     </View>
   );
+};
+
+Document.propTypes = {
+  documentId: PropTypes.string.isRequired,
+  document: PropTypes.shape({
+    artboards: PropTypes.arrayOf(artboard),
+  }),
 };
 
 export default Document;

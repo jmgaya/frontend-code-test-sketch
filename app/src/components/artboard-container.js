@@ -36,9 +36,9 @@ const View = styled.main`
 
 const ArtboardContainer = () => {
   const { documentId, artboardIdx } = useParams();
-  const artboardIndex = parseInt(artboardIdx);
+  const artboardIndex = Number.parseInt(artboardIdx);
   const document = useDocument(documentId);
-  const artboard = document ? document.artboards[artboardIndex] : null;
+  const artboard = document ? document.artboards[artboardIndex] : undefined;
 
   return (
     <>

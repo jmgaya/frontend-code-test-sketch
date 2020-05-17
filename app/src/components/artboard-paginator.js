@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import Paginator from "./common/paginator";
 import { Link } from "react-router-dom";
@@ -25,7 +26,7 @@ const ArtboardPaginator = ({ documentId, index, documentLength }) => {
         <Link
           to={getArtboardRoute({
             documentId,
-            idx: index - 1
+            idx: index - 1,
           })}
         >
           <StyledArrowLeft />
@@ -35,7 +36,7 @@ const ArtboardPaginator = ({ documentId, index, documentLength }) => {
         <Link
           to={getArtboardRoute({
             documentId,
-            idx: index + 1
+            idx: index + 1,
           })}
         >
           <StyledArrowRight />
@@ -43,6 +44,12 @@ const ArtboardPaginator = ({ documentId, index, documentLength }) => {
       }
     />
   );
+};
+
+ArtboardPaginator.propTypes = {
+  documentId: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  documentLength: PropTypes.number.isRequired,
 };
 
 export default ArtboardPaginator;

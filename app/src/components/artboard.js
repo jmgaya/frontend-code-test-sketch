@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { artboard } from "../types";
 
 const ArtboardView = styled.figure`
   width: 100%;
@@ -21,17 +22,17 @@ const sortByWidthAndHeightDesc = (a, b) =>
 const artboardFitsIntoDocument = ({
   containerWidth,
   containerHeight,
-  artboard: { width, height }
+  artboard: { width, height },
 }) => containerWidth >= width && containerHeight >= height;
 
 const getArtboardImageSrc = ({ artboard, containerWidth, containerHeight }) => {
   const sortedDescFiles = artboard.files.sort(sortByWidthAndHeightDesc);
 
-  const suitableArtboard = sortedDescFiles.find(artboard =>
+  const suitableArtboard = sortedDescFiles.find((artboard) =>
     artboardFitsIntoDocument({
       containerWidth,
       containerHeight,
-      artboard
+      artboard,
     })
   );
 
@@ -42,13 +43,13 @@ const getArtboardImageSrc = ({ artboard, containerWidth, containerHeight }) => {
 
 const Artboard = ({ artboard }) => {
   const measuredRef = React.useCallback(
-    el => {
+    (el) => {
       if (el !== null && artboard) {
-        const image = el.getElementsByTagName("img")[0];
+        const image = el.querySelectorAll("img")[0];
         image.src = getArtboardImageSrc({
           artboard,
           containerWidth: el.offsetWidth,
-          containerHeight: el.offsetHeight
+          containerHeight: el.offsetHeight,
         });
       }
     },
@@ -57,9 +58,13 @@ const Artboard = ({ artboard }) => {
 
   return (
     <ArtboardView ref={measuredRef}>
-      <ArtboardImg alt={artboard.name} />;
+      <ArtboardImg alt={artboard.name} />
     </ArtboardView>
   );
+};
+
+Artboard.propTypes = {
+  artboard: artboard,
 };
 
 export default Artboard;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { FONT_SIZE_L } from "../../constants/fonts";
 
@@ -35,7 +36,7 @@ const Paginator = ({
   disableRight = false,
   left,
   right,
-  separator = "/"
+  separator = "/",
 }) => (
   <Layout>
     {!disableLeft && left}
@@ -45,5 +46,15 @@ const Paginator = ({
     {!disableRight && right}
   </Layout>
 );
+
+Paginator.propTypes = {
+  index: PropTypes.number.isRequired,
+  length: PropTypes.number.isRequired,
+  disableLeft: PropTypes.bool,
+  disableRight: PropTypes.bool,
+  left: PropTypes.element,
+  right: PropTypes.element,
+  separator: PropTypes.string,
+};
 
 export default Paginator;

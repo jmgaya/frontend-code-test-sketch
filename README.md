@@ -39,6 +39,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Used same `favicon.ico` present [here](https://sketch.cloud/s/z3p4o)
 * Favoured *arrow functions* over explicit *function declarations* mainly because of issues with scopes and simplicity
 * Using [yarn](https://yarnpkg.com/) as the package manager because it comes with [CRA](http://create-react-app.dev/) and I'm using it on my day by day basis.
+* Added [eslint](https://eslint.org/) through the [lint script](app/README.md#yarn-lint) with several plugins.
 * Using **fetch** for querying the API for simplicity.
 * Extracted **constants** like *colors*,  *routes* or *fonts* for "changing once, working everywhere" pattern.
 * Extracted **common** components as `Header`, `Spinner` or `Logo` given its multiple usages.
@@ -57,10 +58,6 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 * Screenshot testing seeking better confidence when changing any visual stuff (e.g. [jest-image-snapshot](https://github.com/americanexpress/
 * Testing React complex components like `artboard.js` or `document.js`. In those scenarios we'll should make use of [act](https://testing-library.com/docs/preact-testing-library/api#act) because of the usage of hooks and API requests.
-* A more restrictive **linting configuration** with:
-    * [eslint plugin React](https://github.com/yannickcr/eslint-plugin-react)
-    * [stylelint](https://styled-components.com/docs/tooling#stylelint) while styiling with `styled-components`
-    * A more "vanilla Javascript" related plugin, like for example [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn).
 * Missing React propTypes and defaultProps (in case those last are needed).
 * Any Javascript static typing system seeking better documentation and more confidence when developing. By adding this feature we could avoid adding React propTypes.
 * Pre-commit hook which runs [eslint](https://eslint.org/) and [prettier](https://prettier.io/). This pretends to avoid commiting code that doesn't met our code standards (e.g. [husky](https://github.com/typicode/husky))

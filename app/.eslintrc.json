@@ -1,0 +1,24 @@
+{
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "plugin:unicorn/recommended",
+    "plugin:jest/recommended",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "jest/globals": true,
+    "es6": true
+  },
+  "rules": {
+    "unicorn/prevent-abbreviations": "off",
+    "unicorn/filename-case": [
+      "error",
+      { "case": "kebabCase", "ignore": ["setupTests.js"] }
+    ]
+  }
+}
