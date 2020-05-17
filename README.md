@@ -33,6 +33,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 * Using **UPPERCASE** for constants.
 * Implemented **Load different documents depending on the URL** bonus point through `/document/document-id` routes, defaulting to `document/Y8wDM` when accessing `/` route
 * Using [styled components](https://styled-components.com/) because Sketch is internally using **styled components**. On my day by day basis I use [JSS](https://cssinjs.org/) with its main advantages (and disavantages) over **styled components**
+* Using React propTypes instead of a static type checker like. On my day by day basis I use [Flow](https://flow.org/)
 * Removed all the logic referring [Service Workers](https://developers.google.com/web/fundamentals/primers/service-workers) because it's not a requirement.
 * Removed the [Webapp manifest](https://developers.google.com/web/fundamentals/web-app-manifest) because it's not a requirement.
 * Added an **asterisk rule** with several CSS rules. This seeks a more "natural layout model" for padding and margin rules.
@@ -58,8 +59,7 @@ You can find the description [here](https://github.com/sketch-hq/frontend-code-t
 
 * Screenshot testing seeking better confidence when changing any visual stuff (e.g. [jest-image-snapshot](https://github.com/americanexpress/
 * Testing React complex components like `artboard.js` or `document.js`. In those scenarios we'll should make use of [act](https://testing-library.com/docs/preact-testing-library/api#act) because of the usage of hooks and API requests.
-* Missing React propTypes and defaultProps (in case those last are needed).
-* Any Javascript static typing system seeking better documentation and more confidence when developing. By adding this feature we could avoid adding React propTypes.
+* Any Javascript static typing system seeking better documentation and more confidence when developing. By adding this feature we could remove React propTypes.
 * Pre-commit hook which runs [eslint](https://eslint.org/) and [prettier](https://prettier.io/). This pretends to avoid commiting code that doesn't met our code standards (e.g. [husky](https://github.com/typicode/husky))
 * Bind **Left** and **Right** keyboard keys for a simple Artboard navigation.
 * Error scenario in artboard route with invalid document (e.g. `/document/1/artboard/0`)
